@@ -1,5 +1,5 @@
-# KTPTShinycalender
+# KTRA Shiny App
 
 library(shiny)
 
-runGitHub("KTPTShinycalender", "hkim9936")
+runGitHub("KTRA", "iRick92")
