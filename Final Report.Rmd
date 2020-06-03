@@ -8,29 +8,9 @@ output:
       ]
 ---
 
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(eval = FALSE)
-
-library(tidyverse)
-library(class)
-library(cvTools)
-library(ggplot2)
-library(e1071)
-library(pheatmap)
-library(caret)
-library(survival)
-library(survminer)
-library(Hmisc)
-
-library(knitr)
-
-library(htmltab)
-library(textreadr)
-library(rvest)
-
 ```
 
 
@@ -183,10 +163,29 @@ In this project, I firstly assisted in processing ElliPro scores and converting 
 
 # Appendix
 
-
-## Extracting ElliPro
+## Libraries
 
 \footnotesize
+
+```{r}
+
+library(tidyverse)
+library(class)
+library(cvTools)
+library(e1071)
+library(caret)
+library(survival)
+library(survminer)
+library(Hmisc)
+library(knitr)
+library(htmltab)
+library(textreadr)
+library(rvest)
+
+```
+
+
+## Extracting ElliPro
 
 The following code describes the process in which the ElliPro scores were extracted from the HLA epitope registry.
 ```{r}
@@ -421,9 +420,6 @@ for (i in 1:nrow(eplet_to_score_all)) {
 # Usage:
 # eg. eplet_to_score_dict$X4Q or eplet_to_score_dict[["X4Q"]] returns 4 (Eplet mismatch for X4Q equals 4)
 
-# Idea - When summing up the mismatches, count for that patient: Number of High misamtches (Number 4): 8, NUmber of Intermediate mismatches (Number 4): 2.. 
-# To make it clear which why it is predicted the transplant will be good or bad for transparency on how the predictions are made
-
 ```
 
 ```{r}
@@ -506,8 +502,8 @@ class2$total_score
 
 eplets_data <- cbind(subset(eplets_data, select=-c(X17RS:X199T)),class1$total_score)
 eplets_data <- cbind(eplets_data,class2$total_score)
-colnames(eplets_data)[87] <- 'Total_EliPro_Score_class1'
-colnames(eplets_data)[88] <- 'Total_EliPro_Score_class2'
+colnames(eplets_data)[87] <- 'class1.total_score'
+colnames(eplets_data)[88] <- 'class2.total_score'
 write.csv(eplets_data,"final_epletdata_sepclass.csv", row.names = FALSE)
 
 read.csv("final_epletdata_sepclass.csv")
