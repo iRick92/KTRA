@@ -30,7 +30,7 @@ ui = dashboardPage(
         sidebarMenu(
             id = "tabs",
             menuItem("Login", tabName = "login", icon = icon("sign-in-alt")),
-            menuItem("Compatability", tabName = "compatability", icon = icon("puzzle-piece")),
+            menuItem("Compatibility", tabName = "compatibility", icon = icon("puzzle-piece")),
             menuItem("Risk Calculator", tabName = "risk_calculator", icon = icon("calculator")),
             menuItem("Calendar", tabName = "calendar", icon = icon("calendar")),
             menuItem("About", tabName = "about", icon = icon("info-circle"))
@@ -65,7 +65,7 @@ ui = dashboardPage(
                       
                       br(),
                       br(),
-                      selectInput("username", span(tagList(icon("user"), "  Username")), choices = c("Hoon","Ricky C", "Ricky Y", "Sherry", "Patient (Before Match)", "Patient (After Match)"), width = 250),
+                      selectInput("username", span(tagList(icon("user"), "  Username")), choices = c( "custom", "Pre-Recipient Example", "Post-Recipient Example", "Matched Recipient Example"), width = 250),
                       passwordInput("password", span(tagList(icon("lock"), "  Password")), value = "", width = 250, placeholder = ""),
                       
                       br(),
@@ -77,9 +77,9 @@ ui = dashboardPage(
                 )
           ),
           
-          # Compatability tab
-          tabItem(tabName = "compatability",
-                  h1("Compatability"),
+          # Compatibility tab
+          tabItem(tabName = "compatibility",
+                  h1("Compatibility"),
                   
                   fluidRow(
                     box(
@@ -124,8 +124,8 @@ ui = dashboardPage(
                   
                   h1("Risk Calculator"),
                   
-                  # Show Not Available Screen
-                  conditionalPanel(condition = "input.username == 'Patient (Before Match)'",
+                  # Show Not Available Screen   
+                  conditionalPanel(condition = "input.username == 'Pre-Recipient Example'",
                     fluidRow(  
                       box(
                         width = 12,
@@ -135,7 +135,7 @@ ui = dashboardPage(
                     )
                   ),
                   
-                  conditionalPanel(condition = "input.username != 'Patient (Before Match)'",
+                  conditionalPanel(condition = "input.username != 'Pre-Recipient Example'",
                   
                     fluidRow(
                         box(
@@ -222,13 +222,13 @@ ui = dashboardPage(
                         box(
                           width = 4,
                           
-                          h3("Cold Ischaemia Time"),
+                          h3("Cold Ischemia Time"),
                           
                           br(),
-                          valueBoxOutput("ischaemia_valuebox", width = 12),
+                          valueBoxOutput("ischemia_valuebox", width = 12),
                           
                           br(),
-                          h4(htmlOutput("ischaemia_explanation"))
+                          h4(htmlOutput("ischemia_explanation"))
                           
                         )
                         
@@ -359,26 +359,11 @@ server <- function(input, output, session) {
   
   # Assign username to a patient
   username_to_id <- reactive({
-    if (input$username == "Hoon") {
-      return("13209KR")
-    }
-    else if (input$username == "Ricky C") {
-      return("13209KR")
-    }
-    else if (input$username == "Ricky Y") {
-      return("43893KR")
-    }
-    else if (input$username == "Sherry") {
-      return("12519KR")
-    }
     
-    else if (input$username == "Patient (Before Match)") {
-      return("44482KR")
+    if (input$username == "custom") {
+      return("custom")
     }
-    
-    else if (input$username == "Patient (After Match)") {
       return("44482KR")
-    }
   })
   
   user_data <- reactive({
@@ -395,7 +380,7 @@ server <- function(input, output, session) {
     Sys.sleep(0.5)
     
     # Switch Tab
-    updateTabItems(session, "tabs", "compatability")
+    updateTabItems(session, "tabs", "compatibility")
     
     # Pop up 
     shinyalert("Success", paste("Welcome back, ", input$username), type = "success")
@@ -408,7 +393,7 @@ server <- function(input, output, session) {
   
   
   
-  # Compatability Section
+  # Compatibility Section
   output$username <- renderText({ 
     return(input$username)
     })
@@ -421,7 +406,7 @@ server <- function(input, output, session) {
     recipient_id = (user_data() %>% select(Lab_Ref))[1,1]
     recipient_bmi = (user_data() %>% select(recipient_bmi))[1,1]
     recipient_gender = if((user_data() %>% select(Sex_Cat))[1,1] == 0) "Female" else "Male"
-    recipient_status = if (input$username == "Patient (Before Match)") "Unmatched" else "Kidney Donor Matched"
+    recipient_status = if (input$username == "Pre-Recipient Example") "Unmatched" else "Kidney Donor Matched"
     
     # Donor Details
     donor_age = (user_data() %>% select(donorage))[1,1]
@@ -479,7 +464,7 @@ server <- function(input, output, session) {
   output$donor_comparison <- renderUI({  
     
     # Only show if patient has match
-    if (input$username != "Patient (Before Match)") {
+    if (input$username != "Pre-Recipient Example") {  
     
     # Recipient Details
     recipient_age = (user_data() %>% select(agetxn))[1,1]
@@ -753,50 +738,38 @@ server <- function(input, output, session) {
     }
   })
   
-  output$ischaemia_valuebox = renderValueBox({
+  output$ischemia_valuebox = renderValueBox({
     
-    #Ischaemia(t=0) = 0.9285714 (Low Risk)
-    #Ischaemia(t=1) = 0.9428571 (Low Risk)
-    #Ischaemia(t=2) = 0.9571429 (Low Risk)
-    #Ischaemia(t=3) = 0.9714286 (Low Risk)
-    #Ischaemia(t=4) = 0.9857143 (Low Risk)
-    #Ischaemia(t=5) = 1         (Risky)
-    #Ischaemia(t=6) = 1.014286  (High Risk)
-    #Ischaemia(t=7) = 1.028571  (High Risk)
-    #Ischaemia(t=8) = 1.042857  (High Risk)
-    #Ischaemia(t=9) = 1.057143  (High Risk)
-    #...
-    
-    ischaemia_time =  (user_data() %>% select(Ischaemia))[1,1]
-    risk = (1/70)*ischaemia_time + (13/14)
+    ischemia_time =  (user_data() %>% select(Ischaemia))[1,1]
+    risk = (1/70)*ischemia_time + (13/14)
     
     if (risk > 1.05) {
-      valueBox("High Risk", "Cold Ischameia Time", icon = icon("times"), color = "red", width = 12)
+      valueBox("High Risk", "Cold Ischemeia Time", icon = icon("times"), color = "red", width = 12)
     }
     else if (risk < 1) {
-      valueBox("Low Risk", "Cold Ischameia Time", icon = icon("check"), color = "green", width = 12)
+      valueBox("Low Risk", "Cold Ischemeia Time", icon = icon("check"), color = "green", width = 12)
     }
     else { 
-      valueBox("Risky", "Cold Ischameia Time", icon = icon("minus"), color = "yellow", width = 12)
+      valueBox("Risky", "Cold Ischemeia Time", icon = icon("minus"), color = "yellow", width = 12)
     }
     
   })
   
-  output$ischaemia_explanation = renderUI({
+  output$ischemia_explanation = renderUI({
     
-    ischaemia_time =  (user_data() %>% select(Ischaemia))[1,1]
-    risk = (1/70)*ischaemia_time + (13/14)
+    ischemia_time =  (user_data() %>% select(Ischaemia))[1,1]
+    risk = (1/70)*ischemia_time + (13/14)
     
     if (risk > 1) {
-      str1 <- paste("Cold Ischaemia Time for donor kidney: <span style=\"color:red\"><b>",ischaemia_time, "hours</b></span>.")
-      str2 <- paste("Cold Ischaemia Time refers to chilling of the kidney after its blood supply has been cut off.")
-      str3 <- paste("A <b>high Cold Ischaemia Time</b> may result in an <b>increased risk of graft failure</b>.")
+      str1 <- paste("Cold Ischemia Time for donor kidney: <span style=\"color:red\"><b>",ischemia_time, "hours</b></span>.")
+      str2 <- paste("Cold Ischemia Time refers to chilling of the kidney after its blood supply has been cut off.")
+      str3 <- paste("A <b>high Cold Ischemia Time</b> may result in an <b>increased risk of graft failure</b>.")
       HTML(paste(str1, str2, str3, sep = '<br/><br/>'))
     } 
     
     else {
-      str1 <- paste("Cold Ischaemia Time for donor kidney: <span style=\"color:green\"><b>",ischaemia_time, "hours</b></span>.")
-      str2 <- paste("Cold Ischaemia Time refers to chilling of the kidney after its blood supply has been cut off.")
+      str1 <- paste("Cold Ischemia Time for donor kidney: <span style=\"color:green\"><b>",ischemia_time, "hours</b></span>.")
+      str2 <- paste("Cold Ischemia Time refers to chilling of the kidney after its blood supply has been cut off.")
       HTML(paste(str1, str2, sep = '<br/><br/>'))
     }
     
@@ -951,7 +924,7 @@ server <- function(input, output, session) {
       print("Appointments after today:")
       print(v$monthdata[[2]] %>% filter(clin_visit == "TRUE" & day > Sys.Date()))
       
-      if (input$username == "Patient (After Match)") {
+      if (input$username == "Post-Recipient Example" | input$username == "Matched Recipient Example") {
         # 4 months from today is next appointment
         date = as.Date((v$monthdata[[2]] %>% filter(clin_visit == "TRUE" & day > Sys.Date() + 120) %>% select(day))[1,1])
         date = format(as.Date(date, '%Y-%m-%d'), format='%A %B %d, %Y')
@@ -1019,7 +992,7 @@ server <- function(input, output, session) {
                 type = v$monthdata[[2]][v$idx,][["clin_visit_type"]]
                 
                 # If they have not yet been matched
-                if (input$username != "Patient (After Match)") {
+                if (input$username == "Pre-Recipient Example") {
                   str1 <- paste("Your Clinical visit for today is at <b>", time,"</b>. You will be seeing <b>", doc, "</b> <br>") 
                   str2 <- paste("<b>Appointment Details</b>") 
                   str3 <- paste("<li>Blood Test</li>") 
