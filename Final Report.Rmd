@@ -39,12 +39,12 @@ The KTRA has three main features. In the pre and post transplantation stage, pat
 
 This risk report gives 6 seperate scores. The first set of scores inform the recipient of their risk level of developing Denovo DSA as well as the current presence of Preformed DSA, which is included in Dr Wong’s dataset. The second set of scores show the risk of developing Antibody Mediated Rejection as well as the joint impact of Gender Mismatch and Kidney Size as well as Cold Ischemia time on graft survivability. 
 
-## Cox Proportional Hazards Model
-Within the KTRA, the Cox Proportional Hazards model was used in three of the risk scores (DSA Class 1, DSA Class 2 and AMR Class 2). The Hazard function measures how specific covariates influence the risk of events happening at time t. In the Cox model, we are interested in the relative risk of observed covariates to the mean of the training covariates, which is the Hazard ratio. 
-
-
 
 # Methods - Evaluation Strategies
+
+
+## Cox Proportional Hazards Model
+Within the KTRA, the Cox Proportional Hazards model was used in three of the risk scores (DSA Class 1, DSA Class 2 and AMR Class 2). The Hazard function measures how specific covariates influence the risk of events happening at time t. In the Cox model, we are interested in the relative risk of observed covariates to the mean of the training covariates, which is the Hazard ratio. 
 
 The 3 Cox models that were generated were evaluated on the significance of the variables and its adherence to the proportional hazards and homoscedasticity linearity assumptions. Lastly the Out of bag C-index performance of the models were evaluated. 
 
@@ -144,25 +144,7 @@ In conclusion, the KTRA helps patients in the management of their illness and th
 
 Additionally, as there is no study that shows a clear causation between ElliPro score and kidney rejection, using ElliPro score instead of counting the number of eplets mismatch is an innovation in our project, as it improves the understanding of immunological risk from different eplets. However, as our ElliPro score dictionary does not cover all mismatched eplets of the patients, there could be some information missing in our modelling. Finally, although the result of the models with ElliPro score suggested significant coefficients and acceptable C-index, the deviance residuals of these models are not symmetric around 0. Future work on robust Cox regression models would be recommended to solve the outliers problem.
 
-
-
-# Student Contributions
-
-## Hoon Kim
-For this final project I was able to procure the Ellipro Scores by web scraping. Afterwards I assisted each one in the processing of the data and developing of the models. After review of these observations made by these models, I assisted with the calendar feature in the final application. Finally I gave my insight in fine tuning the final product.
-
-## Ricky Cai
-My contributions for this project include assisting in processing and merging ElliPro scores with the original data, developing random forest survival models (which were not used for the final product), developing the coxph models, user interface design for the KTRA shiny app, development of the KTRA app, keeping meeting minutes and report writing. 
-
-## Ricky Yavits
-Throughout this project I made a variety of contributions towards the overall product. First I assisted in model selection by creating a model for testing. Further, I helped with the design of the shiny app by providing a draft and critique of other designs. I also reviewed the models’ performance together with my group members. Finally, I made the script for the video, recorded the video with the help of another group member.
-
-## Sherry Fan
-In this project, I firstly assisted in processing ElliPro scores and converting eplets mismatch to ElliPro score. And then I tested coxph models with different covariates and reviewed the models’ performance together with my group members. And finally, I constructed presentation, made presentation slides with my group members’ help, and assisted in report writing.
-
-## Jiawen Liu
-In the group project I attended the initial meeting but contributed little afterwards. 
-
+\newpage
 
 # Appendix
 
@@ -764,6 +746,22 @@ ggcoxdiagnostics(mod, type = "deviance",
 boxplot(cv.means, main = "AMR Class 2",  ylab = "C Index")
 ```
 
+# Student Contributions
+
+## Hoon Kim
+For this final project I was able to procure the Ellipro Scores by web scraping. Afterwards I assisted each one in the processing of the data and developing of the models. After review of these observations made by these models, I assisted with the calendar feature in the final application. Finally I gave my insight in fine tuning the final product.
+
+## Ricky Cai
+My contributions for this project include assisting in processing and merging ElliPro scores with the original data, developing random forest survival models (which were not used for the final product), developing the coxph models, user interface design for the KTRA shiny app, development of the KTRA app, keeping meeting minutes and report writing. 
+
+## Ricky Yavits
+Throughout this project I made a variety of contributions towards the overall product. First I assisted in model selection by creating a model for testing. Further, I helped with the design of the shiny app by providing a draft and critique of other designs. I also reviewed the models’ performance together with my group members. Finally, I made the script for the video, recorded the video with the help of another group member.
+
+## Sherry Fan
+In this project, I firstly assisted in processing ElliPro scores and converting eplets mismatch to ElliPro score. And then I tested coxph models with different covariates and reviewed the models’ performance together with my group members. And finally, I constructed presentation, made presentation slides with my group members’ help, and assisted in report writing.
+
+## Jiawen Liu
+In the group project I attended the initial meeting but contributed little afterwards. 
 
 
 # References
