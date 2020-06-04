@@ -16,7 +16,7 @@ knitr::opts_chunk$set(eval = FALSE)
 
 # Aim and Background 
 
-In Australia, the current allocation of kidneys is coordinated through a computer software known as Organ Match which allocates kidneys based on rules defined by the National Renal Transplant Advisory Committee. Organ Match provides clear user friendly reports of donors and recipients with additional information on Donor Specific Antibodies and HLA matches for clinicians and transplant coordinators.(TSANZ, 2019) However the transplant recipient is also an important party in the transplantation process. To best share this technology with the patients, so that they can make the best decisions for their treatment and kidney transplantation, the KTRA aims at aiding in the management of their illness with innovations on the HLA matching selection criteria.
+In Australia, the current allocation of kidneys is coordinated through a computer software known as Organ Match which allocates kidneys based on rules defined by the National Renal Transplant Advisory Committee. Organ Match provides clear user friendly reports of donors and recipients with additional information on Donor Specific Antibodies and HLA matches for clinicians and transplant coordinators(TSANZ, 2019). However the transplant recipient is also an important party in the transplantation process. To best share this technology with the patients, so that they can make the best decisions for their treatment and kidney transplantation, the KTRA aims at aiding in the management of their illness with innovations on the HLA matching selection criteria.
 
 <br>
 
@@ -25,16 +25,16 @@ In Australia, the current allocation of kidneys is coordinated through a compute
 The main additional data source that was used in the project was the inclusion of the ElliPro score. The following section details the approach we took to integrate the ElliPro score into our project.
 
 ## The ElliPro Score (Data Collection)
-The Organ Match software utilises HLA matching for donor recipient kidney pairing. The issue is however there are numerous examples in which the donor and recipient differ only by a single amino-acid difference and yet the recipient developed de-novo DSA. (Tambur, 2018). Hence eplet matching has become a trending topic in Organ transplantation. But even with eplet matching, different eplets induce different levels of immune reactions. This is observed experimentally where two recipient pairs with the same number of eplet matches exhibit different immune responses.
+The Organ Match software utilises HLA matching for donor recipient kidney pairing. The issue is however there are numerous examples in which the donor and recipient differ only by a single amino-acid difference and yet the recipient developed de-novo DSA (Tambur, 2018). Hence eplet matching has become a trending topic in Organ transplantation. But even with eplet matching, different eplets induce different levels of immune reactions. This is observed experimentally where two recipient pairs with the same number of eplet matches exhibit different immune responses.
 
-Due to this phenomenon we incorporate the ElliPro score, a score describing the immunogenicity of the Eplet, into our models.(Duquesnoy & Marrari, 2017) The ElliPro score was taken from the HLA epitope registry from the Federal University of Paiui in Brazil. It must be noted that the HLA epitope registry is an intellectual community resource thus information on each eplet is consistently being updated.
+Due to this phenomenon we incorporate the ElliPro score, a score describing the immunogenicity of the Eplet, into our models (Duquesnoy & Marrari, 2017). The ElliPro score was taken from the HLA epitope registry from the Federal University of Paiui in Brazil. It must be noted that the HLA epitope registry is an intellectual community resource thus information on each eplet is consistently being updated.
  
-The Ellipro Scores were scraped from the HLA epitope registry which organsed the eplets in terms of HLA loci. These HLA loci included ABC, DRB1/3/4/5, DQB + DQA, DPB + DPA, Interlocus Cl. II and MICA. These raw scores which were categorical were then quantified as 1,2,3 and 4 in ascending order of immunogenicity levels. The code below shows the processes of constructing data frames for each HLA loci and row binding to create a final dictionary dataframe. The code describing the data collection is included in the appendix (Appendix - Extracting ElliPro).
+The Ellipro Scores were scraped from the HLA epitope registry which organised the eplets in terms of HLA loci. These HLA loci included ABC, DRB1/3/4/5, DQB + DQA, DPB + DPA, Interlocus Cl. II and MICA. These raw scores which were categorical were then quantified as 1, 2, 3 and 4 in ascending order of immunogenicity levels. The code below shows the processes of constructing data frames for each HLA loci and row binding to create a final dictionary dataframe. The code describing the data collection is included in the appendix (Appendix - Extracting ElliPro).
 
-Now Dr Wong’s dataset contains eplet mismatch information in which mismatches between donor and recipient in each sample is detonated as a 1 and a match as 0. Hence this dataset was modified by first identifying class 1 and class 2 eplets. Afterwards, the total Ellipro score for class 1 and class 2 eplets were calculated by multiplying each mismatched eplet by it’s corresponding Ellipro score. Two columns were then incorporated into the dataset denoting the total Class 1 and 2 Ellipro score for each sample. The code to merge the ElliPro scores with the original data provided by Dr Wong is included in the appendix (Appendix - Merging ElliPro)
+Now Dr Wong’s dataset contains eplet mismatch information in which mismatches between donor and recipient in each sample is detonated as a 1 and a match as 0. Hence this dataset was modified by first identifying class 1 and class 2 eplets. Afterwards, the total Ellipro score for class 1 and class 2 eplets were calculated by multiplying each mismatched eplet by it’s corresponding Ellipro score. Two columns were then incorporated into the dataset denoting the total Class 1 and 2 Ellipro score for each sample. The code to merge the ElliPro scores with the original data provided by Dr Wong is included in the appendix (Appendix - Merging ElliPro).
 
 ## Introducing the KTRA
-The KTRA has three main features. In the pre and post transplantation stage, patients can use the calendar feature to check their appointments as well as their medicine and dialysis schedule.In the decision-making stage, patients can compare between themselves and their donor. KTRA also has a risk factors report, which shows the prediction results of transplantation risk.
+The KTRA has three main features. In the pre and post transplantation stage, patients can use the calendar feature to check their appointments as well as their medicine and dialysis schedule. In the decision-making stage, patients can compare between themselves and their donor. KTRA also has a risk factors report, which shows the prediction results of transplantation risk.
 
 
 This risk report gives 6 seperate scores. The first set of scores inform the recipient of their risk level of developing Denovo DSA as well as the current presence of Preformed DSA, which is included in Dr Wong’s dataset. The second set of scores show the risk of developing Antibody Mediated Rejection as well as the joint impact of Gender Mismatch and Kidney Size as well as Cold Ischemia time on graft survivability. 
@@ -49,24 +49,24 @@ Within the KTRA, the Cox Proportional Hazards model was used in three of the ris
 The 3 Cox models that were generated were evaluated on the significance of the variables and its adherence to the proportional hazards and homoscedasticity linearity assumptions. Lastly the Out of bag C-index performance of the models were evaluated. 
 
 Firstly variable significance was tested using Wald’s test, Likelihood ratio test and Logrank test, in which all models pointed to significant variables.
-The linear assumption is the requirement that the continuous variable need to be in a linear correlation with the observed times of events. Here all 3 models passed this assumption but there was some non linearity showing.  
+The linear assumption is the requirement that the continuous variable needs to be in a linear correlation with the observed times of events. Here all 3 models passed this assumption but there was some non linearity showing.  
 
-The proportional hazards assumption is the most important assumption for Cox regression. This assumption requires the model to have the ratio of the hazards between the training data and the mean of the training data to be constant over time.All models adhered to the proportional hazard assumption
+The proportional hazards assumption is the most important assumption for Cox regression. This assumption requires the model to have the ratio of the hazards between the training data and the mean of the training data to be constant over time. All models adhered to the proportional hazard assumption.
 The homoscedasticity assumption was checked based on residual deviance. For the model to be considered a good fit these residuals should be roughly symmetrically distributed about zero with a standard deviation of 1. However for all three models this assumption was not satisfied. This means that the models are not reliable in the prediction of large hazard ratio values. 
 
 On top of trying the basic logging, square rooting of the covariate to no avail, the application of  robust regression methods were considered, however the literature on robust Cox proportional hazard methods are still a big area of research and thus a conservative approach was taken.
-The index of concordance is a "global" index for validating the predictive ability of a survival model. More specifically it gives the probability a randomly selected recipient who experienced an event ( such as developing Denovo DSAs) had a higher risk score than a patient who had not experienced the event. A model is considered “good” with a C-index of 0.7. Despite our DSA models only slightly missing out on this threshold, our AMR model breezed past this threshold with ease.
+The index of concordance is a "global" index for validating the predictive ability of a survival model. More specifically it gives the probability a randomly selected recipient who experienced an event (such as developing Denovo DSAs) had a higher risk score than a patient who had not experienced the event. A model is considered “good” with a C-index of 0.7. Despite our DSA models only slightly missing out on this threshold, our AMR model breezed past this threshold with ease.
 
 
 
 # Results - Final Model
 
 ## Donor Specific Antibodies Risk Scores (DSA Risk Scores)
-The presence of DSA or Donor Specific Antibodies are a major risk in kidney rejection.(Lionaki et al., 2013) While there is an association between epitope mismatching and DSA (Wong et al, 2020), our cox proportional hazards models use the ElliPro scores as the only variable. The two Class 1 and Class2 Donor Specific Antibodies models use Class 1 and Class 2 ElliPro scores respectively. The figure below shows how the level of risk for DSA Class 1 and Class 2 is communicated to a patient in the KTRA app.
+The presence of DSA or Donor Specific Antibodies are a major risk in kidney rejection (Lionaki et al., 2013). While there is an association between epitope mismatching and DSA (Wong et al, 2020), our cox proportional hazards models use the ElliPro scores as the only variable. The two Class 1 and Class 2 Donor Specific Antibodies models use Class 1 and Class 2 ElliPro scores respectively. The figure below shows how the level of risk for DSA Class 1 and Class 2 is communicated to a patient in the KTRA app.
 
 ![Example of Low, Risky and High Risk for DSA (Class 1 and 2) in KTRA App](screenshots/DSA_Risk.png)
 
-As discussed earlier in evaluation strategies, a C index of 0.7 is considered good which helped guide which variables we used in the final product. To evaluate these cox proportional hazards models, we used 5 cross validation with 25 repetitions. The following figure shows the C index for the DSA models over 25 repetitions which shows the median C index for both models above 0.6.
+As discussed earlier in evaluation strategies, a C index of 0.7 is considered good which helped guide which variables we used in the final product. To evaluate these cox proportional hazards models, we used 5 fold cross validation with 25 repetitions. The following figure shows the C index for the DSA models over 25 repetitions which shows the median C index for both models above 0.6.
 
 ![DSA Class 1 and 2 evaluations with median C index around 0.61 and 0.64 respectively](screenshots/DSA_Boxplots.png)
 
@@ -83,7 +83,7 @@ The app also features a preformed DSA score where the risk score is classified a
 
 ## Antibody Mediated Rejection Risk Score (AMR Risk Score)
 
-Antibody Mediated Rejection or AMR covers all allograft rejection caused by antibodies and  is recognised as the major cause of allograft failure. (Singh et al., 2009) Research shows that de novo DSA developing class 2 eplet mismatches is more prominent so only the Class 2 ElliPro score is used to model the AMR risk score using a coxph model.  (Stegal, et al, 2012). For details on how the AMR model was created, see appendix (Appendix - AMR Model)
+Antibody Mediated Rejection or AMR covers all allograft rejection caused by antibodies and  is recognised as the major cause of allograft failure (Singh et al., 2009). Research shows that de novo DSA developing class 2 eplet mismatches is more prominent so only the Class 2 ElliPro score is used to model the AMR risk score using a coxph model (Stegal, et al, 2012). For details on how the AMR model was created, see appendix (Appendix - AMR Model).
 
 The following figure shows the C index for the AMR model over 25 repetitions which shows the median C index above 0.7.
 
@@ -91,14 +91,14 @@ The following figure shows the C index for the AMR model over 25 repetitions whi
 
 
 ## Gender + BMI (Kidney Size) Risk Score
-There is research that proposes that although graft failure risk is higher when donor and recipient genders are different, this risk is mitigated when the donor has a larger kidney. (McGee et al, 2020) Bmi was used to represent kidney size and this was justified as in the research there was a significant positive correlation between BMI and kidney size with a p value threshold of 0.05. (McGee et al, 2020) The combined score is calculated by the following equation. 
+Previous research proposes that although graft failure risk is higher when donor and recipient genders are different, this risk is mitigated when the donor has a larger kidney (McGee et al, 2020). BMI was used to represent kidney size and this was justified as in the research there was a significant positive correlation between BMI and kidney size with a p value threshold of 0.05 (McGee et al, 2020). The combined score is calculated by the following equation: 
 
 $BMI \times GenderMM$
 
-Where BMI is scored as 2 when the recipients BMI is greater, 1 otherwise and GenderMM is scored as 2 when there is a mismatch of gender and 1 for a match. If the resulting output is 4, the risk level is classified as high risk, risky if 2 and low risk if 1. A major limitation of this scoring method is that the research only provided evidence for the mitigation of higher risk when it is a male donor and  female recipient.
+Where BMI is scored as 2 when the recipients BMI is greater than the that of the donor or 1 otherwise. GenderMM is scored as 2 when there is a mismatch of gender and 1 for a match. If the resulting output is 4, the risk level is classified as high risk, risky if 2 and low risk if 1. A major limitation of this scoring method is that the research only provided evidence for the mitigation of higher risk when it is a male donor and female recipient.
 
 ## Cold Ischemia Time Risk Score
-The final risk score is concerned with the relationship of cold ischemia time and graft failure. Cold ischemia time is defined as the time in between transplants. A Hazard Ratio model deduced from the data provided by an article from the International society of Nephrology, is used to calculate the proportional association of higher cold ischemia time and risk of graft failure. (Debout et al., 2015)The equation is given by 
+The final risk score is concerned with the relationship of cold ischemia time and graft failure. Cold ischemia time is defined as the time in between transplants. A Hazard Ratio model deduced from the data provided by an article from the International society of Nephrology, is used to calculate the proportional association of higher cold ischemia time and risk of graft failure (Debout et al., 2015). The equation is given by:
 
 $HR = \frac{1}{70} * Cold \ Ischemia \ Time \ (hours)  + \frac{13}{14}$
 
@@ -118,14 +118,14 @@ runGitHub("KTRA", "iRick92")
 ```
 
 
-As previously mentioned, the KTRA incorporates three main features. The first feature compares the compatibility between a kidney recipient and a kidney donor. The second feature shows a risk report outlining 6 risk factors that may influence the success of a kidney transplant. The final feature is a calendar that provides the patient with a daily schedule outlining the clinical appointments, dialysis sessions and medication schedule for the day. As a patient moves from along the stages of kidney transplantation, more features of the KTRA are made available. When a patient is on the waiting list for a new kidney, they are issued login details to allow them to log into the KTRA. 
+As previously mentioned, the KTRA incorporates three main features. The first feature compares the compatibility between a kidney recipient and a kidney donor. The second feature shows a risk report outlining 6 risk factors that may influence the success of a kidney transplant. The final feature is a calendar that provides the patient with a daily schedule outlining the clinical appointments, dialysis sessions and medication schedule for the day. As a patient moves  along the stages of kidney transplantation, more features of the KTRA are made available. When a patient is on the waiting list for a new kidney, they are issued with login details to allow them to log into the KTRA. 
 
-For a patient in the post transplantation stage, the KTRA app provides a summary about themselves including age, location, blood type, BMI, gender and their kidney match status. The patient is also able to check the calendar on upcoming appointments, dialysis sessions and medication schedules. The figure below shows this important information on one screen.
+For a patient in the post transplantation stage, the KTRA app provides a summary about the patient including age, location, blood type, BMI, gender and their kidney match status. The patient is also able to check the calendar on upcoming appointments, dialysis sessions and medication schedules. The figure below shows this important information on one screen.
 
-![The calendar tab for a patient in the pre-transplantation stage. This includes their pre transplant test and medicine schedule](screenshots/Calendar_Pre.png)
+![The calendar tab for a patient in the pre-transplantation stage. This includes their pre-transplant test and medicine schedule](screenshots/Calendar_Pre.png)
 
 
-Once a kidney is matched to a recipient, the KTRA app is automatically updated. The patient is then able to see a comparison between themselves and the kidney donor through the compatibility tab. The patient is also able to view a comprehensive risk report which provides the risks that contribute to a successful transplant. The following figures below show a patient with a matched kidney what risks are associated with kidney transplantation to help them make an important decision - to accept or reject the kidney. 
+Once a kidney is matched to a recipient, the KTRA app is automatically updated. The patient is then able to see a comparison between themselves and the kidney donor through the compatibility tab. The patient is also able to view a comprehensive risk report which provides the risks that contribute to a successful transplant. The following figures below show a patient with a matched kidney and the risks are associated with kidney transplantation to help them make an important decision - to accept or reject the kidney. 
 
 
 ![The compatibility tab for a patient with a matched kidney comparing kidney donor and recipient](screenshots/Compatibility_Matched.png)
@@ -140,9 +140,9 @@ When a patient finally receives a kidney, the main feature of the KTRA they will
 
 
 # Discussion and Conclusion
-In conclusion The KTRA helps patients in the management of their illness and their kidney transplant by firstly aiding in the management of Chronic Kidney Disease pre and post transplant and secondly by providing a comprehensive risk report which the recipient can incorporate in his or her decision making process. Some future development for the KTRA include a comprehensive input system for the Nephrologist to upload the data and manage their assigned patients, multi discipline integration since CKD is usually associated with another illness, integration of pre transplant biopsy results, so patients can identify the risk of developing cellular rejection and further research on eplet matching.
+In conclusion, the KTRA helps patients in the management of their illness and their kidney transplant by firstly aiding in the management of Chronic Kidney Disease pre and post transplant and secondly by providing a comprehensive risk report which the recipient can incorporate in his or her decision making process. Some future development for the KTRA include a comprehensive input system for the Nephrologist to upload the data and manage their assigned patients, multi discipline integration since CKD is usually associated with another illness, integration of pre transplant biopsy results, so patients can identify the risk of developing cellular rejection and further research on eplet matching.
 
-Additionally, as there is no study shows a clear causation between ElliPro score and kidney rejection, using ElliPro score instead of counting the number of eplets mismatch is an innovation in our project, as it improves the understanding of immunological risk from different eplets. However, as our ElliPro score dictionary does not cover all mismatched eplets of the patients, there could be some information missing in our modelling.  Additionally, although the result of the models with ElliPro score suggested significant coefficients and acceptable C-index, the deviance residuals of these models are not symmetric around 0. Future work on robust Cox regression models would be recommended to solve the outliers problem.
+Additionally, as there is no study that shows a clear causation between ElliPro score and kidney rejection, using ElliPro score instead of counting the number of eplets mismatch is an innovation in our project, as it improves the understanding of immunological risk from different eplets. However, as our ElliPro score dictionary does not cover all mismatched eplets of the patients, there could be some information missing in our modelling. Finally, although the result of the models with ElliPro score suggested significant coefficients and acceptable C-index, the deviance residuals of these models are not symmetric around 0. Future work on robust Cox regression models would be recommended to solve the outliers problem.
 
 
 
@@ -159,6 +159,9 @@ Throughout this project I made a variety of contributions towards the overall pr
 
 ## Sherry Fan
 In this project, I firstly assisted in processing ElliPro scores and converting eplets mismatch to ElliPro score. And then I tested coxph models with different covariates and reviewed the models’ performance together with my group members. And finally, I constructed presentation, made presentation slides with my group members’ help, and assisted in report writing.
+
+## Jiawen Liu
+In the group project I attended the initial meeting but contributed little afterwards. 
 
 
 # Appendix
@@ -331,33 +334,6 @@ eplet_dpb_dpa$Eplet = paste('X', eplet_dpb_dpa$Eplet, sep='') #convert name star
 
 ```{r}
 
-# MICA
-
-url <- "https://www.epregistry.com.br/index/databases/database/MICA/"
-# first half of the table i just imported the table utilising the htmltab library and function
-
-eplet_MICA <- htmltab(doc = url)[,1:2]
-
-rid_rows <- which(eplet_MICA$`ElliPro Score` == 'Â')
-
-eplet_MICA <- eplet_MICA[-rid_rows,][,1:2]
-
-colnames(eplet_MICA)[2] <- "ElliPro.Score" 
-
-eplet_MICA <- eplet_MICA %>% #convert to numeric score
-  mutate('ElliPro.Score' = 
-           case_when(
-             ElliPro.Score == 'High' ~ 4,
-             ElliPro.Score == 'Intermediate' ~ 3,
-             ElliPro.Score == 'Low' ~ 2,
-             ElliPro.Score == 'Very Low' ~ 1,
-         ))
-eplet_MICA$Eplet = paste('X', eplet_MICA$Eplet, sep='') #convert name starting with X
-
-```
-
-```{r}
-
 # Concatentate the two tables together and export as CSV
 
 eplet_final <- rbind(eplet_abc_pt1,eplet_abc_pt2,eplet_dpb_dpa,eplet_dq,eplet_drb,eplet_MICA)
@@ -494,6 +470,33 @@ class2 <- class2 %>% # create column and fill with rowsum
   mutate(total_score = rowSums(.))
 
 class2$total_score
+```
+
+```{r}
+
+# MICA
+
+url <- "https://www.epregistry.com.br/index/databases/database/MICA/"
+# first half of the table i just imported the table utilising the htmltab library and function
+
+eplet_MICA <- htmltab(doc = url)[,1:2]
+
+rid_rows <- which(eplet_MICA$`ElliPro Score` == 'Â')
+
+eplet_MICA <- eplet_MICA[-rid_rows,][,1:2]
+
+colnames(eplet_MICA)[2] <- "ElliPro.Score" 
+
+eplet_MICA <- eplet_MICA %>% #convert to numeric score
+  mutate('ElliPro.Score' = 
+           case_when(
+             ElliPro.Score == 'High' ~ 4,
+             ElliPro.Score == 'Intermediate' ~ 3,
+             ElliPro.Score == 'Low' ~ 2,
+             ElliPro.Score == 'Very Low' ~ 1,
+         ))
+eplet_MICA$Eplet = paste('X', eplet_MICA$Eplet, sep='') #convert name starting with X
+
 ```
 
 ```{r}
