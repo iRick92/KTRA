@@ -1,11 +1,12 @@
 ---
 title: "Final Report - Group 20"
-author: Hoon Kim, Ricky Cai, Ricky Yavits, Sherry Fan, Jiawen Liu
-geometry: margin=2cm
+author: "Hoon Kim, Ricky Cai, Ricky Yavits, Sherry Fan, Jiawen Liu"
 output:
+  html_document:
+    df_print: paged
   pdf_document:
-    pandoc_args: [
-      ]
+    pandoc_args: []
+geometry: margin=2cm
 ---
 
 ```{r setup, include=FALSE}
@@ -146,11 +147,49 @@ Additionally, as there is no study that shows a clear causation between ElliPro 
 
 \newpage
 
+\footnotesize
+
+# Student Contributions
+
+## Hoon Kim
+For this final project I was able to procure the Ellipro Scores by web scraping. Afterwards I assisted each one in the processing of the data and developing of the models. After review of these observations made by these models, I assisted with the calendar feature in the final application. Finally I gave my insight in fine tuning the final product.
+
+## Ricky Cai
+My contributions for this project include assisting in processing and merging ElliPro scores with the original data, developing random forest survival models (which were not used for the final product), developing the coxph models, user interface design for the KTRA shiny app, development of the KTRA app, keeping meeting minutes and report writing. 
+
+## Ricky Yavits
+Throughout this project I made a variety of contributions towards the overall product. First I assisted in model selection by creating a model for testing. Further, I helped with the design of the shiny app by providing a draft and critique of other designs. I also reviewed the models’ performance together with my group members. Finally, I made the script for the video, recorded the video with the help of another group member.
+
+## Sherry Fan
+In this project, I firstly assisted in processing ElliPro scores and converting eplets mismatch to ElliPro score. And then I tested coxph models with different covariates and reviewed the models’ performance together with my group members. And finally, I constructed presentation, made presentation slides with my group members’ help, and assisted in report writing.
+
+## Jiawen Liu
+In the group project I attended the initial meeting but contributed little afterwards. 
+
+
+# References
+
+- Cooper, J. E., Gralla, J., Chan, L., & Wiseman, A. C. (2011). Clinical significance of post kidney transplant de novo DSA in otherwise stable grafts. Clinical transplants, 359–364.
+
+- Debout A, Foucher Y, Trébern-Launay K, et al (2015). Each additional hour of cold ischemia time significantly increases the risk of graft failure and mortality following renal transplantation. Kidney Int. 2015;87(2):343-349. doi:10.1038/ki.2014.304
+
+- Do Nguyen HT, Wong G, Chapman JR, et al. The Association Between Broad Antigen HLA Mismatches, Eplet HLA Mismatches and Acute Rejection After Kidney Transplantation. Transplant Direct. 2016;2(12):e120. Published 2016 Nov 23. doi:10.1097/TXD.0000000000000632
+Duquesnoy, R. and Marrari, M., (2017). Usefulness of the ElliPro epitope predictor program in defining the repertoire of HLA-ABC eplets. Human Immunology, 78(7-8), pp.481-488.
+
+- Lionaki S, Panagiotellis K, Iniotaki A, Boletis JN. (2013). Incidence and clinical significance of de novo donor specific antibodies after kidney transplantation. Clin Dev Immunol. 2013; 2013:849835.
+
+- McGee, J. et al. (2010). Donor-recipient gender and size mismatch affects graft success after kidney transplantation. Journal of the American College of Surgeons 210, 718-725.e711, 725-716, 10.1016/j.jamcollsurg.2009.12.032.
+
+- Singh, N., Pirsch, J., & Samaniego, M. (2009). Antibody-mediated rejection: treatment alternatives and outcomes. Transplantation reviews (Orlando, Fla.), 23(1), 34–46. https://doi.org/10.1016/j.trre.2008.08.004
+
+- T- SANZ (2019). OrganMatch A life-changing Link. Retrieved 23 May 2020. https://www.tsanz.com.au/TSANZ%20OrganMatch%20Communique_.pdf
+
+\newpage
+
+
 # Appendix
 
 ## Libraries
-
-\footnotesize
 
 ```{r}
 
@@ -745,41 +784,4 @@ ggcoxdiagnostics(mod, type = "deviance",
 # Boxplot of C-indexes
 boxplot(cv.means, main = "AMR Class 2",  ylab = "C Index")
 ```
-
-# Student Contributions
-
-## Hoon Kim
-For this final project I was able to procure the Ellipro Scores by web scraping. Afterwards I assisted each one in the processing of the data and developing of the models. After review of these observations made by these models, I assisted with the calendar feature in the final application. Finally I gave my insight in fine tuning the final product.
-
-## Ricky Cai
-My contributions for this project include assisting in processing and merging ElliPro scores with the original data, developing random forest survival models (which were not used for the final product), developing the coxph models, user interface design for the KTRA shiny app, development of the KTRA app, keeping meeting minutes and report writing. 
-
-## Ricky Yavits
-Throughout this project I made a variety of contributions towards the overall product. First I assisted in model selection by creating a model for testing. Further, I helped with the design of the shiny app by providing a draft and critique of other designs. I also reviewed the models’ performance together with my group members. Finally, I made the script for the video, recorded the video with the help of another group member.
-
-## Sherry Fan
-In this project, I firstly assisted in processing ElliPro scores and converting eplets mismatch to ElliPro score. And then I tested coxph models with different covariates and reviewed the models’ performance together with my group members. And finally, I constructed presentation, made presentation slides with my group members’ help, and assisted in report writing.
-
-## Jiawen Liu
-In the group project I attended the initial meeting but contributed little afterwards. 
-
-
-# References
-
-- Cooper, J. E., Gralla, J., Chan, L., & Wiseman, A. C. (2011). Clinical significance of post kidney transplant de novo DSA in otherwise stable grafts. Clinical transplants, 359–364.
-
-- Debout A, Foucher Y, Trébern-Launay K, et al (2015). Each additional hour of cold ischemia time significantly increases the risk of graft failure and mortality following renal transplantation. Kidney Int. 2015;87(2):343-349. doi:10.1038/ki.2014.304
-
-- Do Nguyen HT, Wong G, Chapman JR, et al. The Association Between Broad Antigen HLA Mismatches, Eplet HLA Mismatches and Acute Rejection After Kidney Transplantation. Transplant Direct. 2016;2(12):e120. Published 2016 Nov 23. doi:10.1097/TXD.0000000000000632
-Duquesnoy, R. and Marrari, M., (2017). Usefulness of the ElliPro epitope predictor program in defining the repertoire of HLA-ABC eplets. Human Immunology, 78(7-8), pp.481-488.
-
-- Lionaki S, Panagiotellis K, Iniotaki A, Boletis JN. (2013). Incidence and clinical significance of de novo donor specific antibodies after kidney transplantation. Clin Dev Immunol. 2013; 2013:849835.
-
-- McGee, J. et al. (2010). Donor-recipient gender and size mismatch affects graft success after kidney transplantation. Journal of the American College of Surgeons 210, 718-725.e711, 725-716, 10.1016/j.jamcollsurg.2009.12.032.
-
-- Singh, N., Pirsch, J., & Samaniego, M. (2009). Antibody-mediated rejection: treatment alternatives and outcomes. Transplantation reviews (Orlando, Fla.), 23(1), 34–46. https://doi.org/10.1016/j.trre.2008.08.004
-
-- T- SANZ (2019). OrganMatch A life-changing Link. Retrieved 23 May 2020. https://www.tsanz.com.au/TSANZ%20OrganMatch%20Communique_.pdf
-
-
 
