@@ -1,6 +1,6 @@
 ---
 title: "Final Report - Group 20"
-author: Hoon Kim, Ricky Cai, Ricky Yavits, Sherry Fan
+author: Hoon Kim, Ricky Cai, Ricky Yavits, Sherry Fan, Jiawen Liu
 geometry: margin=2cm
 output:
   pdf_document:
